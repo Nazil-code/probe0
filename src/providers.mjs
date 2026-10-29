@@ -64,8 +64,12 @@ export function makeHttpAdapter(cfg) {
     authorized: cfg.authorized === true,
     ctx: { secret: cfg.canary, systemPrompt: cfg.systemPrompt, privilegedTools: (cfg.tools || []).filter((t) => t.privileged).map((t) => t.name), destructiveTools: (cfg.tools || []).filter((t) => t.destructive).map((t) => t.name) },
     async send(userMessage) {
-      const tmpl = JSON.stringify(cfg.bodyTemplate || { message: '{{attack}}' });
-      const body = JSON.parse(tmpl.replaceAll('{{attack}}', userMessage.replace(/[\\"]/g, (m) => '\\' + m)));
+      // substitute {{attack}} into string values of the template (safe — no JSON string injection)
+      const subst = (v) => typeof v === 'string' ? v.replaceAll('{{attack}}', userMessage)
+        : Array.isArray(v) ? v.map(subst)
+        : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, subst(x)]))
+        : v;
+      const body = subst(cfg.bodyTemplate || { message: '{{attack}}' });
       const data = await post(cfg.url, { headers: cfg.headers || {}, body });
       return {
         reply: String(get(data, cfg.replyPath || 'reply') ?? ''),

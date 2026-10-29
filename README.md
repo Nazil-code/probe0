@@ -100,6 +100,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: node bin/probe0.mjs scan --ci     # exits non-zero on any FAIL
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}   # add this as a repo secret for a real target
 ```
 
 ## 🛰️ Test your own AI (Gemini)
