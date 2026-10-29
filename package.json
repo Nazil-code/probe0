@@ -31,13 +31,13 @@
     "pentest",
     "cli"
   ],
-  "homepage": "https://github.com/probe0/probe0",
+  "homepage": "https://github.com/Nazil-code/probe0#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/probe0/probe0.git"
+    "url": "git+https://github.com/Nazil-code/probe0.git"
   },
   "bugs": {
-    "url": "https://github.com/probe0/probe0/issues"
+    "url": "https://github.com/Nazil-code/probe0/issues"
   },
   "author": "Nazil (Automate with Nazil) <hello@automatewithnazil.com>",
   "engines": {
