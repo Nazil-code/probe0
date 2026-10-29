@@ -14,7 +14,7 @@ function makeTarget(spec) {
   if (spec === 'demo' || spec?.type === 'demo') {
     return {
       name: 'demo (probe0-juiceagent)', authorized: true,
-      ctx: { secret: DEMO_META.SECRET, systemPrompt: DEMO_META.SYSTEM_PROMPT, privilegedTools: DEMO_META.privilegedTools },
+      ctx: { secret: DEMO_META.SECRET, systemPrompt: DEMO_META.SYSTEM_PROMPT, privilegedTools: DEMO_META.privilegedTools, destructiveTools: DEMO_META.destructiveTools },
       async send(attack) { return runAgent(attack, { seed: Math.floor(Math.random() * 1e9) }); },
     };
   }

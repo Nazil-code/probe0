@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;box-sizing:border-box}
+  html,body{width:1200px;height:380px;overflow:hidden;background:#05060C;font-family:'Space Grotesk',sans-serif}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(130% 150% at 50% -20%,#121A3A 0%,#0A0E22 45%,#05060C 80%);perspective:1100px}
+  #floor{position:absolute;left:-40%;right:-40%;bottom:-120px;height:460px;transform:rotateX(74deg);transform-origin:50% 100%;
+    background-image:linear-gradient(rgba(90,120,255,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(90,120,255,.22) 1px,transparent 1px);
+    background-size:60px 60px;-webkit-mask-image:linear-gradient(0deg,transparent,#000 55%);opacity:.5}
+  .glow{position:absolute;border-radius:50%;filter:blur(120px)}
+  #row{position:absolute;left:0;right:0;top:118px;display:flex;align-items:center;justify-content:center;gap:4px;transform-style:preserve-3d}
+  .word{font-weight:700;font-size:118px;letter-spacing:-.04em;line-height:1;
+    background:linear-gradient(180deg,#FFFFFF 0%,#D7DEF7 42%,#9AA6D8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))}
+  #markwrap{width:150px;height:150px;transform-style:preserve-3d;transform:rotateX(16deg) rotateY(-14deg)}
+  svg{display:block;overflow:visible}
+  .tag{position:absolute;left:0;right:0;top:272px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:21px;letter-spacing:.02em;color:#9FB0E0}
+  .tag b{color:#5AE0FF}
+  .chip{position:absolute;left:50%;top:40px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.32em;color:#6E7AB0;text-transform:uppercase}
+  #sweep{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,rgba(0,229,255,.55),transparent 42%);-webkit-mask:radial-gradient(circle,transparent 30%,#000 31%);mask:radial-gradient(circle,transparent 30%,#000 31%)}
+</style></head>
+<body><div id="stage">
+  <div id="floor"></div>
+  <i class="glow" style="width:520px;height:520px;left:150px;top:-160px;background:#0E8FE0;opacity:.28"></i>
+  <i class="glow" style="width:520px;height:520px;right:150px;top:40px;background:#7B2CF5;opacity:.30"></i>
+  <div class="chip">AI AGENT SECURITY SCANNER</div>
+  <div id="row">
+    <span class="word">probe</span>
+    <div id="markwrap"><svg viewBox="0 0 120 120" width="150" height="150">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset=".5" stop-color="#3D7BFF"/><stop offset="1" stop-color="#9B5CFF"/></linearGradient>
+        <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#9B5CFF"/><stop offset="1" stop-color="#00E5FF"/></linearGradient>
+        <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <filter id="soft" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <foreignObject x="0" y="0" width="120" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:120px;height:120px"><div id="sweep"></div></div></foreignObject>
+      <circle cx="60" cy="60" r="42" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="90 10" stroke-dashoffset="88" filter="url(#glow)"/>
+      <circle cx="60" cy="60" r="27" fill="none" stroke="url(#g2)" stroke-width="2.5" opacity=".55"/>
+      <g stroke="url(#g)" stroke-width="4.5" stroke-linecap="round" opacity=".9">
+        <line x1="60" y1="17" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="103"/><line x1="17" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="103" y2="60"/></g>
+      <g id="beam"><line x1="60" y1="60" x2="60" y2="20" stroke="url(#g)" stroke-width="3" stroke-linecap="round" opacity=".85"/></g>
+      <circle cx="60" cy="60" r="7" fill="url(#g)" filter="url(#glow)"/><circle cx="60" cy="60" r="3" fill="#EAFBFF"/>
+      <circle id="node" cx="89" cy="31" r="6" fill="#4CFFEA" filter="url(#soft)"/><circle cx="89" cy="31" r="2.6" fill="#fff"/>
+    </svg></div>
+  </div>
+  <div class="tag">Find the weaknesses in your AI agent — <b>before attackers do.</b></div>
+</div>
+<script>
+  window.__setTime = function(t){           // t in [0,1): one loop
+    var a = t*360;
+    document.getElementById('beam').setAttribute('transform','rotate('+a+' 60 60)');
+    document.getElementById('sweep').style.transform='rotate('+a+'deg)';
+    var pulse = 0.5+0.5*Math.sin(t*2*Math.PI*2);
+    var n=document.getElementById('node'); n.setAttribute('r',(5.2+1.8*pulse).toFixed(2)); n.style.opacity=(0.6+0.4*pulse).toFixed(2);
+  };
+  window.__ready = document.fonts.ready.then(()=>new Promise(r=>setTimeout(r,200)));
+</script>
+</body></html>

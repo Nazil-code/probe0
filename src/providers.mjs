@@ -36,7 +36,7 @@ export function makeGeminiAdapter(cfg) {
   return {
     name: `gemini:${model}`,
     authorized: cfg.authorized === true,
-    ctx: { secret: cfg.canary, systemPrompt: cfg.systemPrompt, privilegedTools: (cfg.tools || []).filter((t) => t.privileged).map((t) => t.name) },
+    ctx: { secret: cfg.canary, systemPrompt: cfg.systemPrompt, privilegedTools: (cfg.tools || []).filter((t) => t.privileged).map((t) => t.name), destructiveTools: (cfg.tools || []).filter((t) => t.destructive).map((t) => t.name) },
     async send(userMessage) {
       const body = {
         systemInstruction: { parts: [{ text: cfg.systemPrompt || '' }] },
@@ -61,7 +61,7 @@ export function makeHttpAdapter(cfg) {
   return {
     name: `http:${cfg.url}`,
     authorized: cfg.authorized === true,
-    ctx: { secret: cfg.canary, systemPrompt: cfg.systemPrompt, privilegedTools: (cfg.tools || []).filter((t) => t.privileged).map((t) => t.name) },
+    ctx: { secret: cfg.canary, systemPrompt: cfg.systemPrompt, privilegedTools: (cfg.tools || []).filter((t) => t.privileged).map((t) => t.name), destructiveTools: (cfg.tools || []).filter((t) => t.destructive).map((t) => t.name) },
     async send(userMessage) {
       const tmpl = JSON.stringify(cfg.bodyTemplate || { message: '{{attack}}' });
       const body = JSON.parse(tmpl.replaceAll('{{attack}}', userMessage.replace(/[\\"]/g, (m) => '\\' + m)));
