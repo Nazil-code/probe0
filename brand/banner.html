@@ -1,58 +1,103 @@
 <!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;box-sizing:border-box}
-  html,body{width:1200px;height:380px;overflow:hidden;background:#05060C;font-family:'Space Grotesk',sans-serif}
-  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(130% 150% at 50% -20%,#121A3A 0%,#0A0E22 45%,#05060C 80%);perspective:1100px}
-  #floor{position:absolute;left:-40%;right:-40%;bottom:-120px;height:460px;transform:rotateX(74deg);transform-origin:50% 100%;
-    background-image:linear-gradient(rgba(90,120,255,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(90,120,255,.22) 1px,transparent 1px);
-    background-size:60px 60px;-webkit-mask-image:linear-gradient(0deg,transparent,#000 55%);opacity:.5}
-  .glow{position:absolute;border-radius:50%;filter:blur(120px)}
-  #row{position:absolute;left:0;right:0;top:118px;display:flex;align-items:center;justify-content:center;gap:4px;transform-style:preserve-3d}
-  .word{font-weight:700;font-size:118px;letter-spacing:-.04em;line-height:1;
-    background:linear-gradient(180deg,#FFFFFF 0%,#D7DEF7 42%,#9AA6D8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))}
-  #markwrap{width:150px;height:150px;transform-style:preserve-3d;transform:rotateX(16deg) rotateY(-14deg)}
-  svg{display:block;overflow:visible}
-  .tag{position:absolute;left:0;right:0;top:272px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:21px;letter-spacing:.02em;color:#9FB0E0}
+  html,body{width:1200px;height:400px;overflow:hidden;background:#04050A;font-family:'Space Grotesk',sans-serif}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(140% 160% at 25% -10%,#0E1838 0%,#080C1E 45%,#04050A 82%);perspective:1200px}
+  #grid{position:absolute;left:-50%;right:-50%;bottom:-150px;height:520px;transform:rotateX(76deg);transform-origin:50% 100%;
+    background-image:linear-gradient(rgba(70,130,255,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(70,130,255,.28) 1px,transparent 1px);
+    background-size:54px 54px;-webkit-mask-image:linear-gradient(0deg,transparent,#000 60%);opacity:.45}
+  .glow{position:absolute;border-radius:50%;filter:blur(130px)}
+  #scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px);opacity:.5;mix-blend-mode:overlay}
+  #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 120% at 50% 45%,transparent 55%,rgba(0,0,0,.6) 100%)}
+
+  /* radar (left) */
+  #radar{position:absolute;left:110px;top:60px;width:280px;height:280px;transform-style:preserve-3d;transform:rotateX(14deg) rotateY(-12deg)}
+  #radar svg{position:absolute;inset:0;overflow:visible}
+  #sweepwrap{position:absolute;inset:0;border-radius:50%;-webkit-mask:radial-gradient(circle,transparent 20%,#000 21% 70%,transparent 71%);mask:radial-gradient(circle,transparent 20%,#000 21% 70%,transparent 71%)}
+  #sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(0,229,255,.6),rgba(0,229,255,.12) 26%,transparent 42%)}
+  .blip{position:absolute;width:16px;height:16px;margin:-8px;border-radius:50%;opacity:0}
+  .blip::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid #FF3B5C}
+  .blip::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#FF4D6D;box-shadow:0 0 14px #FF3B5C}
+  .lbl{position:absolute;font:700 13px 'JetBrains Mono',monospace;color:#FF8A9B;letter-spacing:.06em;white-space:nowrap;opacity:0;text-shadow:0 0 10px rgba(255,59,92,.5)}
+
+  /* right block */
+  #right{position:absolute;left:470px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .chip{font:700 13px 'JetBrains Mono',monospace;letter-spacing:.34em;color:#5AE0FF;text-transform:uppercase;opacity:.85}
+  #word{font-weight:700;font-size:120px;letter-spacing:-.04em;line-height:.9;margin:2px 0 6px;
+    background:linear-gradient(180deg,#FFFFFF 0%,#CBD6FF 44%,#8FA2E8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 26px rgba(61,123,255,.45))}
+  #word span{background:linear-gradient(180deg,#5AE0FF,#9B5CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{font:500 22px 'JetBrains Mono',monospace;color:#AEBBE8}
   .tag b{color:#5AE0FF}
-  .chip{position:absolute;left:50%;top:40px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.32em;color:#6E7AB0;text-transform:uppercase}
-  #sweep{position:absolute;inset:-6px;border-radius:50%;background:conic-gradient(from 0deg,rgba(0,229,255,.55),transparent 42%);-webkit-mask:radial-gradient(circle,transparent 30%,#000 31%);mask:radial-gradient(circle,transparent 30%,#000 31%)}
+  .status{margin-top:12px;font:700 17px 'JetBrains Mono',monospace;color:#8793bf;display:flex;align-items:center;gap:12px}
+  .status .dot{width:11px;height:11px;border-radius:50%;background:#FF3B5C;box-shadow:0 0 12px #FF3B5C}
+  .status .n{color:#FF5568}
 </style></head>
 <body><div id="stage">
-  <div id="floor"></div>
-  <i class="glow" style="width:520px;height:520px;left:150px;top:-160px;background:#0E8FE0;opacity:.28"></i>
-  <i class="glow" style="width:520px;height:520px;right:150px;top:40px;background:#7B2CF5;opacity:.30"></i>
-  <div class="chip">AI AGENT SECURITY SCANNER</div>
-  <div id="row">
-    <span class="word">probe</span>
-    <div id="markwrap"><svg viewBox="0 0 120 120" width="150" height="150">
+  <div id="grid"></div>
+  <i class="glow" style="width:480px;height:480px;left:60px;top:-120px;background:#0E8FE0;opacity:.30"></i>
+  <i class="glow" style="width:520px;height:520px;right:40px;top:30px;background:#7B2CF5;opacity:.30"></i>
+
+  <div id="radar">
+    <div id="sweepwrap"><div id="sweep"></div></div>
+    <svg viewBox="0 0 280 280">
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset=".5" stop-color="#3D7BFF"/><stop offset="1" stop-color="#9B5CFF"/></linearGradient>
-        <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#9B5CFF"/><stop offset="1" stop-color="#00E5FF"/></linearGradient>
         <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="soft" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      <foreignObject x="0" y="0" width="120" height="120"><div xmlns="http://www.w3.org/1999/xhtml" style="position:relative;width:120px;height:120px"><div id="sweep"></div></div></foreignObject>
-      <circle cx="60" cy="60" r="42" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="90 10" stroke-dashoffset="88" filter="url(#glow)"/>
-      <circle cx="60" cy="60" r="27" fill="none" stroke="url(#g2)" stroke-width="2.5" opacity=".55"/>
-      <g stroke="url(#g)" stroke-width="4.5" stroke-linecap="round" opacity=".9">
-        <line x1="60" y1="17" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="103"/><line x1="17" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="103" y2="60"/></g>
-      <g id="beam"><line x1="60" y1="60" x2="60" y2="20" stroke="url(#g)" stroke-width="3" stroke-linecap="round" opacity=".85"/></g>
-      <circle cx="60" cy="60" r="7" fill="url(#g)" filter="url(#glow)"/><circle cx="60" cy="60" r="3" fill="#EAFBFF"/>
-      <circle id="node" cx="89" cy="31" r="6" fill="#4CFFEA" filter="url(#soft)"/><circle cx="89" cy="31" r="2.6" fill="#fff"/>
-    </svg></div>
+      <circle cx="140" cy="140" r="130" fill="none" stroke="url(#g)" stroke-width="2" opacity=".22"/>
+      <circle cx="140" cy="140" r="95" fill="none" stroke="url(#g)" stroke-width="2" opacity=".28"/>
+      <circle cx="140" cy="140" r="58" fill="none" stroke="url(#g)" stroke-width="2.5" opacity=".4"/>
+      <g stroke="url(#g)" stroke-width="4" stroke-linecap="round" opacity=".85">
+        <line x1="140" y1="40" x2="140" y2="62"/><line x1="140" y1="218" x2="140" y2="240"/><line x1="40" y1="140" x2="62" y2="140"/><line x1="218" y1="140" x2="240" y2="140"/></g>
+      <circle cx="140" cy="140" r="8" fill="url(#g)" filter="url(#glow)"/><circle cx="140" cy="140" r="3.5" fill="#EAFBFF"/>
+    </svg>
+    <div class="blip" id="b0" style="left:210px;top:92px"></div><div class="lbl" id="l0" style="left:224px;top:84px">TOOL ABUSE</div>
+    <div class="blip" id="b1" style="left:96px;top:70px"></div><div class="lbl" id="l1" style="left:-20px;top:40px">PROMPT INJECTION</div>
+    <div class="blip" id="b2" style="left:70px;top:186px"></div><div class="lbl" id="l2" style="left:-34px;top:196px">SECRET LEAK</div>
+    <div class="blip" id="b3" style="left:196px;top:200px"></div><div class="lbl" id="l3" style="left:150px;top:230px">XSS OUTPUT</div>
+    <div class="blip" id="b4" style="left:150px;top:62px"></div>
+    <div class="blip" id="b5" style="left:118px;top:214px"></div>
   </div>
-  <div class="tag">Find the weaknesses in your AI agent — <b>before attackers do.</b></div>
+
+  <div id="right">
+    <div class="chip">AI AGENT SECURITY SCANNER</div>
+    <div id="word">probe<span>0</span></div>
+    <div class="tag">Find the weaknesses in your AI — <b>before attackers do.</b></div>
+    <div class="status"><span class="dot" id="livedot"></span>SCANNING<span style="color:#3a4166">·</span>THREATS FOUND: <span class="n" id="count">0</span></div>
+  </div>
+
+  <div id="scan"></div><div id="vig"></div>
 </div>
 <script>
-  window.__setTime = function(t){           // t in [0,1): one loop
-    var a = t*360;
-    document.getElementById('beam').setAttribute('transform','rotate('+a+' 60 60)');
-    document.getElementById('sweep').style.transform='rotate('+a+'deg)';
-    var pulse = 0.5+0.5*Math.sin(t*2*Math.PI*2);
-    var n=document.getElementById('node'); n.setAttribute('r',(5.2+1.8*pulse).toFixed(2)); n.style.opacity=(0.6+0.4*pulse).toFixed(2);
+  // blip angles (deg from center, 0=right, clockwise) matched to their positions
+  var B=[{a:-25},{a:205},{a:150},{a:40},{a:-70},{a:110}];
+  var cx=140,cy=140;
+  ['b0','b1','b2','b3','b4','b5'].forEach(function(id,i){var e=document.getElementById(id);var r=e.getBoundingClientRect();});
+  window.__setTime=function(t){
+    var sweep=t*360;                         // one full sweep per loop
+    document.getElementById('sweep').style.transform='rotate('+sweep+'deg)';
+    var found=0;
+    B.forEach(function(b,i){
+      var ang=((b.a%360)+360)%360;
+      var diff=((sweep-ang)%360+360)%360;    // how long since sweep passed this blip
+      var passed=diff<300;                   // stays lit after being swept (until near loop end)
+      if(passed) found++;
+      var near=diff<40;                       // bright pulse right as swept
+      var blip=document.getElementById('b'+i);
+      blip.style.opacity=passed?(near?1:0.55):0;
+      blip.style.transform='scale('+(near?1.0+0.5*(1-diff/40):0.8)+')';
+      var lbl=document.getElementById('l'+i);
+      if(lbl) lbl.style.opacity=passed?(near?1:0.7):0;
+    });
+    document.getElementById('count').textContent=found;
+    document.getElementById('livedot').style.opacity=(0.4+0.6*Math.abs(Math.sin(t*Math.PI*6))).toFixed(2);
+    // subtle glitch on the wordmark occasionally
+    var w=document.getElementById('word');
+    var gl=(Math.sin(t*Math.PI*2*5)>0.97);
+    w.style.transform=gl?'translateX('+((Math.random()-0.5)*6)+'px)':'none';
   };
-  window.__ready = document.fonts.ready.then(()=>new Promise(r=>setTimeout(r,200)));
+  window.__ready=document.fonts.ready.then(function(){return new Promise(function(r){setTimeout(r,200)})});
 </script>
 </body></html>

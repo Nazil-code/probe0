@@ -5,7 +5,7 @@
 <br>
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-5B8CFF?style=flat-square)](LICENSE)
-[![CI](https://img.shields.io/github/actions/workflow/status/Nazil-code/probe0/ci.yml?branch=main&style=flat-square&label=CI&color=2EE59D)](https://github.com/Nazil-code/probe0/actions)
+[![CI](https://github.com/Nazil-code/probe0/actions/workflows/ci.yml/badge.svg)](https://github.com/Nazil-code/probe0/actions/workflows/ci.yml)
 [![Stars](https://img.shields.io/github/stars/Nazil-code/probe0?style=flat-square&color=5AE0FF&label=stars)](https://github.com/Nazil-code/probe0/stargazers)
 ![Node](https://img.shields.io/badge/node-%E2%89%A518-5B8CFF?style=flat-square)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-2EE59D?style=flat-square)
