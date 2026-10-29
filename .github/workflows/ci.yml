@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Unit tests
+        run: node --test
+      - name: Gemini adapter smoke test (mocked network)
+        run: node scripts/gemini-smoke.mjs
+      - name: Demo scan runs
+        run: node bin/probe0.mjs scan --target demo

@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif}
+  .card{width:720px;height:420px;display:grid;place-items:center;position:relative;overflow:hidden}
+  .dark{background:radial-gradient(120% 120% at 30% 10%,#10friends 0,#05060C 60%,#04050A 100%);background:radial-gradient(120% 120% at 30% 10%,#0C1026 0,#05060C 70%)}
+  .light{background:#F4F6FC}
+  .row{display:flex;align-items:center;gap:34px}
+  .word{font-weight:700;letter-spacing:-.03em}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .g-ink-d{background:linear-gradient(180deg,#fff,#C8D0F0);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .g-ink-l{color:#0B1020}
+  .small{display:flex;gap:28px;align-items:flex-end}
+  svg{display:block;overflow:visible}
+</style></head>
+<body>
+
+<!-- reusable mark -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00E5FF"/><stop offset=".5" stop-color="#3D7BFF"/><stop offset="1" stop-color="#9B5CFF"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#9B5CFF"/><stop offset="1" stop-color="#00E5FF"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- THE MARK: a probe/target reticle that reads as the "0" -->
+    <g id="mark">
+      <!-- faint radar ticks ring -->
+      <g stroke="url(#g)" stroke-width="2" opacity=".30">
+        <g id="ticks"></g>
+      </g>
+      <!-- outer bold ring with a reticle gap at top-right -->
+      <circle cx="60" cy="60" r="42" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"
+              pathLength="100" stroke-dasharray="90 10" stroke-dashoffset="88" filter="url(#glow)"/>
+      <!-- inner thin ring -->
+      <circle cx="60" cy="60" r="27" fill="none" stroke="url(#g2)" stroke-width="2.5" opacity=".55"/>
+      <!-- crosshair ticks -->
+      <g stroke="url(#g)" stroke-width="4.5" stroke-linecap="round" opacity=".9">
+        <line x1="60" y1="17" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="103"/>
+        <line x1="17" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="103" y2="60"/>
+      </g>
+      <!-- scan beam from center to the detected node -->
+      <line x1="60" y1="60" x2="89" y2="31" stroke="url(#g)" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+      <!-- center probe node -->
+      <circle cx="60" cy="60" r="7" fill="url(#g)" filter="url(#glow)"/>
+      <circle cx="60" cy="60" r="3" fill="#EAFBFF"/>
+      <!-- the found vulnerability: a bright node locked on the ring -->
+      <circle cx="89" cy="31" r="8.5" fill="#05060C"/>
+      <circle cx="89" cy="31" r="6" fill="#4CFFEA" filter="url(#softglow)"/>
+      <circle cx="89" cy="31" r="2.6" fill="#fff"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- 1 mark on dark -->
+<div class="card dark" id="c1"><svg viewBox="0 0 120 120" width="240" height="240"><use href="#mark"/></svg></div>
+<!-- 2 full lockup dark: mark used as the 0 in probe0 -->
+<div class="card dark" id="c2"><div class="row">
+  <span class="word g-ink-d" style="font-size:118px">probe</span>
+  <svg viewBox="0 0 120 120" width="128" height="128" style="margin-left:-10px"><use href="#mark"/></svg>
+</div></div>
+<!-- 3 full lockup light -->
+<div class="card light" id="c3"><div class="row">
+  <span class="word g-ink-l" style="font-size:118px">probe</span>
+  <svg viewBox="0 0 120 120" width="128" height="128" style="margin-left:-10px"><use href="#mark"/></svg>
+</div></div>
+<!-- 4 favicon sizes -->
+<div class="card dark" id="c4"><div class="small">
+  <svg viewBox="0 0 120 120" width="112" height="112"><use href="#mark"/></svg>
+  <svg viewBox="0 0 120 120" width="64" height="64"><use href="#mark"/></svg>
+  <svg viewBox="0 0 120 120" width="40" height="40"><use href="#mark"/></svg>
+  <svg viewBox="0 0 120 120" width="28" height="28"><use href="#mark"/></svg>
+</div></div>
+
+<script>
+  // build radar ticks (24 around)
+  let t='';for(let i=0;i<24;i++){const a=i/24*2*Math.PI,x1=60+50*Math.cos(a),y1=60+50*Math.sin(a),x2=60+54*Math.cos(a),y2=60+54*Math.sin(a);t+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;}
+  document.getElementById('ticks').innerHTML=t;
+  window.__ready = document.fonts.ready;
+</script>
+</body></html>

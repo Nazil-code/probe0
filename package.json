@@ -1,0 +1,47 @@
+{
+  "name": "probe0",
+  "version": "0.1.0",
+  "description": "Open-source security testing for AI agents and applications. Find weaknesses, fix them, keep them fixed.",
+  "type": "module",
+  "bin": {
+    "probe0": "bin/probe0.mjs"
+  },
+  "scripts": {
+    "scan": "node bin/probe0.mjs scan --target demo",
+    "verify": "node bin/probe0.mjs verify --target demo",
+    "test": "node --test",
+    "smoke": "node scripts/gemini-smoke.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "probe0.config.example.json"
+  ],
+  "keywords": [
+    "ai-security",
+    "llm-security",
+    "prompt-injection",
+    "ai-agents",
+    "security-testing",
+    "red-teaming",
+    "gemini",
+    "pentest",
+    "cli"
+  ],
+  "homepage": "https://github.com/probe0/probe0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/probe0/probe0.git"
+  },
+  "bugs": {
+    "url": "https://github.com/probe0/probe0/issues"
+  },
+  "author": "Nazil (Automate with Nazil) <hello@automatewithnazil.com>",
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "Apache-2.0"
+}

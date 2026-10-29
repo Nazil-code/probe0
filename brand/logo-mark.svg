@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00E5FF"/><stop offset=".5" stop-color="#3D7BFF"/><stop offset="1" stop-color="#9B5CFF"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#9B5CFF"/><stop offset="1" stop-color="#00E5FF"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g stroke="url(#g)" stroke-width="2" opacity=".30">
+    <line x1="110.0" y1="60.0" x2="114.0" y2="60.0"/><line x1="108.7" y1="72.9" x2="112.6" y2="73.9"/><line x1="104.8" y1="85.0" x2="108.5" y2="86.6"/><line x1="98.5" y1="96.0" x2="101.8" y2="98.4"/><line x1="90.0" y1="105.4" x2="92.6" y2="108.5"/><line x1="79.9" y1="112.9" x2="81.7" y2="116.4"/><line x1="68.5" y1="118.0" x2="69.5" y2="121.9"/><line x1="56.5" y1="120.6" x2="56.5" y2="124.6"/><line x1="44.6" y1="120.6" x2="43.6" y2="124.6"/><line x1="33.1" y1="118.0" x2="31.3" y2="121.9"/><line x1="22.7" y1="112.9" x2="20.0" y2="116.4"/><line x1="13.9" y1="105.4" x2="10.6" y2="108.5"/><line x1="7.2" y1="96.0" x2="3.5" y2="98.4"/><line x1="2.7" y1="85.0" x2="-1.0" y2="86.6"/><line x1="0.7" y1="72.9" x2="-3.3" y2="73.9"/><line x1="0.7" y1="47.1" x2="-3.3" y2="46.1"/><line x1="2.7" y1="35.0" x2="-1.0" y2="33.4"/><line x1="7.2" y1="24.0" x2="3.5" y2="21.6"/><line x1="13.9" y1="14.6" x2="10.6" y2="11.5"/><line x1="22.7" y1="7.1" x2="20.0" y2="3.6"/><line x1="33.1" y1="2.0" x2="31.3" y2="-1.9"/><line x1="44.6" y1="-0.6" x2="43.6" y2="-4.6"/><line x1="56.5" y1="-0.6" x2="56.5" y2="-4.6"/><line x1="68.5" y1="2.0" x2="69.5" y2="-1.9"/>
+  </g>
+  <circle cx="60" cy="60" r="42" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="90 10" stroke-dashoffset="88" filter="url(#glow)"/>
+  <circle cx="60" cy="60" r="27" fill="none" stroke="url(#g2)" stroke-width="2.5" opacity=".55"/>
+  <g stroke="url(#g)" stroke-width="4.5" stroke-linecap="round" opacity=".9">
+    <line x1="60" y1="17" x2="60" y2="30"/><line x1="60" y1="90" x2="60" y2="103"/>
+    <line x1="17" y1="60" x2="30" y2="60"/><line x1="90" y1="60" x2="103" y2="60"/>
+  </g>
+  <line x1="60" y1="60" x2="89" y2="31" stroke="url(#g)" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+  <circle cx="60" cy="60" r="7" fill="url(#g)" filter="url(#glow)"/>
+  <circle cx="60" cy="60" r="3" fill="#EAFBFF"/>
+  <circle cx="89" cy="31" r="8.5" fill="#05060C"/>
+  <circle cx="89" cy="31" r="6" fill="#4CFFEA" filter="url(#softglow)"/>
+  <circle cx="89" cy="31" r="2.6" fill="#fff"/>
+</svg>

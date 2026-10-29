@@ -1,0 +1,10 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+
+# local scan output and your private target config (contains your prompts/canary)
+probe0-report.json
+probe0-report.html
+probe0.config.json
