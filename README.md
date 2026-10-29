@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="brand/banner.gif" alt="Probe0 — AI agent security scanner" width="100%">
+<img src="https://raw.githubusercontent.com/Nazil-code/probe0/main/brand/banner.gif" alt="Probe0 — AI agent security scanner" width="100%">
 
 <br>
 
@@ -60,7 +60,7 @@ node bin/probe0.mjs scan --target demo
 ## 🎬 See it in action
 
 <div align="center">
-<img src="brand/demo.gif" alt="probe0 scan running against the demo agent" width="760">
+<img src="https://raw.githubusercontent.com/Nazil-code/probe0/main/brand/demo.gif" alt="probe0 scan running against the demo agent" width="760">
 </div>
 
 Probe0 ships with **`probe0-juiceagent`**, a deliberately vulnerable AI agent, so the scan finds real issues out of the box. Each finding carries severity, reproduction steps, redacted evidence, a confidence score, and a **recommended fix**. Export a shareable report any time:
@@ -181,4 +181,12 @@ node scripts/gemini-smoke.mjs   # verify the Gemini adapter path (mocked network
 
 [Apache-2.0](LICENSE) · Built by [**Automate with Nazil**](https://automatewithnazil.com) — AI automation, web apps, and security.
 
-<div align="center"><sub>Probe0 tests AI systems you own or are authorized to assess. Use it to defend, never to attack.</sub></div>
+---
+
+<div align="center">
+
+### ⭐ If Probe0 helps you ship safer AI, star the repo — it helps other developers find it.
+
+<sub>Probe0 tests AI systems you own or are authorized to assess. Use it to defend, never to attack.</sub>
+
+</div>

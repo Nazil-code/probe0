@@ -44,8 +44,9 @@ export function makeGeminiAdapter(cfg) {
         generationConfig: { temperature: 0 }, // low temperature to reduce noise; the N-trial engine handles the rest
       };
       if (tools) body.tools = tools;
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      const data = await post(url, { body });
+      // key sent as a header (not a URL query param) so it can't leak into logs/URLs
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+      const data = await post(url, { headers: { 'x-goog-api-key': apiKey }, body });
       const parts = data?.candidates?.[0]?.content?.parts || [];
       const reply = parts.filter((p) => p.text).map((p) => p.text).join(' ').trim();
       const toolCalls = parts.filter((p) => p.functionCall).map((p) => ({ name: p.functionCall.name, args: p.functionCall.args || {} }));

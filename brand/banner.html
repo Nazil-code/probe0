@@ -1,103 +1,89 @@
 <!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;box-sizing:border-box}
-  html,body{width:1200px;height:400px;overflow:hidden;background:#04050A;font-family:'Space Grotesk',sans-serif}
-  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(140% 160% at 25% -10%,#0E1838 0%,#080C1E 45%,#04050A 82%);perspective:1200px}
-  #grid{position:absolute;left:-50%;right:-50%;bottom:-150px;height:520px;transform:rotateX(76deg);transform-origin:50% 100%;
-    background-image:linear-gradient(rgba(70,130,255,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(70,130,255,.28) 1px,transparent 1px);
-    background-size:54px 54px;-webkit-mask-image:linear-gradient(0deg,transparent,#000 60%);opacity:.45}
-  .glow{position:absolute;border-radius:50%;filter:blur(130px)}
-  #scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px);opacity:.5;mix-blend-mode:overlay}
-  #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 120% at 50% 45%,transparent 55%,rgba(0,0,0,.6) 100%)}
+  html,body{width:1200px;height:400px;overflow:hidden;background:#04060A;font-family:'Chakra Petch',sans-serif}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(135% 150% at 50% -15%,#0B1428 0%,#070A16 48%,#04060A 85%)}
+  canvas#rain{position:absolute;inset:0;opacity:.5}
+  #hex{position:absolute;inset:0;opacity:.14;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='48'><path d='M14 0 L42 0 L56 24 L42 48 L14 48 L0 24 Z' fill='none' stroke='%235AA0FF' stroke-width='1'/></svg>");
+    background-size:56px 48px}
+  #floor{position:absolute;left:-50%;right:-50%;bottom:-160px;height:520px;transform:perspective(900px) rotateX(77deg);transform-origin:50% 100%;
+    background-image:linear-gradient(rgba(60,160,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(60,160,255,.35) 1px,transparent 1px);
+    background-size:60px 60px;-webkit-mask-image:linear-gradient(0deg,transparent,#000 62%);opacity:.4}
+  .glow{position:absolute;border-radius:50%;filter:blur(140px)}
+  #scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);opacity:.5}
+  #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 120% at 50% 45%,transparent 52%,rgba(0,0,0,.68) 100%)}
 
-  /* radar (left) */
-  #radar{position:absolute;left:110px;top:60px;width:280px;height:280px;transform-style:preserve-3d;transform:rotateX(14deg) rotateY(-12deg)}
-  #radar svg{position:absolute;inset:0;overflow:visible}
-  #sweepwrap{position:absolute;inset:0;border-radius:50%;-webkit-mask:radial-gradient(circle,transparent 20%,#000 21% 70%,transparent 71%);mask:radial-gradient(circle,transparent 20%,#000 21% 70%,transparent 71%)}
-  #sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(0,229,255,.6),rgba(0,229,255,.12) 26%,transparent 42%)}
-  .blip{position:absolute;width:16px;height:16px;margin:-8px;border-radius:50%;opacity:0}
-  .blip::before{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid #FF3B5C}
-  .blip::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#FF4D6D;box-shadow:0 0 14px #FF3B5C}
-  .lbl{position:absolute;font:700 13px 'JetBrains Mono',monospace;color:#FF8A9B;letter-spacing:.06em;white-space:nowrap;opacity:0;text-shadow:0 0 10px rgba(255,59,92,.5)}
-
-  /* right block */
-  #right{position:absolute;left:470px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:4px}
-  .chip{font:700 13px 'JetBrains Mono',monospace;letter-spacing:.34em;color:#5AE0FF;text-transform:uppercase;opacity:.85}
-  #word{font-weight:700;font-size:120px;letter-spacing:-.04em;line-height:.9;margin:2px 0 6px;
-    background:linear-gradient(180deg,#FFFFFF 0%,#CBD6FF 44%,#8FA2E8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
-    filter:drop-shadow(0 0 26px rgba(61,123,255,.45))}
-  #word span{background:linear-gradient(180deg,#5AE0FF,#9B5CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .tag{font:500 22px 'JetBrains Mono',monospace;color:#AEBBE8}
-  .tag b{color:#5AE0FF}
-  .status{margin-top:12px;font:700 17px 'JetBrains Mono',monospace;color:#8793bf;display:flex;align-items:center;gap:12px}
-  .status .dot{width:11px;height:11px;border-radius:50%;background:#FF3B5C;box-shadow:0 0 12px #FF3B5C}
-  .status .n{color:#FF5568}
+  #lockup{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+  .chip{font:700 14px 'JetBrains Mono',monospace;letter-spacing:.42em;color:#58E0FF;text-transform:uppercase;text-shadow:0 0 16px rgba(0,229,255,.6)}
+  .row{display:flex;align-items:center;gap:6px}
+  #probe{font-weight:700;font-size:150px;letter-spacing:-.01em;line-height:.8;color:#fff;
+    text-shadow:0 0 2px #fff,0 0 22px rgba(90,170,255,.55),0 0 48px rgba(61,123,255,.35);position:relative}
+  #reticle{width:150px;height:150px;margin-left:-6px}
+  #reticle svg{display:block;overflow:visible}
+  .tag{font:500 23px 'JetBrains Mono',monospace;color:#B7C4EC;margin-top:14px;letter-spacing:.01em}
+  .tag b{color:#58E0FF}
+  .term{font:700 15px 'JetBrains Mono',monospace;color:#5a7;letter-spacing:.04em;margin-top:6px;color:#59C78A}
+  .term .c{color:#4a5578}.term .n{color:#FF5568}
 </style></head>
 <body><div id="stage">
-  <div id="grid"></div>
-  <i class="glow" style="width:480px;height:480px;left:60px;top:-120px;background:#0E8FE0;opacity:.30"></i>
-  <i class="glow" style="width:520px;height:520px;right:40px;top:30px;background:#7B2CF5;opacity:.30"></i>
+  <div id="hex"></div>
+  <canvas id="rain" width="1200" height="400"></canvas>
+  <div id="floor"></div>
+  <i class="glow" style="width:520px;height:520px;left:150px;top:-160px;background:#0E8FE0;opacity:.26"></i>
+  <i class="glow" style="width:520px;height:520px;right:150px;top:40px;background:#7B2CF5;opacity:.26"></i>
 
-  <div id="radar">
-    <div id="sweepwrap"><div id="sweep"></div></div>
-    <svg viewBox="0 0 280 280">
-      <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset=".5" stop-color="#3D7BFF"/><stop offset="1" stop-color="#9B5CFF"/></linearGradient>
-        <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <circle cx="140" cy="140" r="130" fill="none" stroke="url(#g)" stroke-width="2" opacity=".22"/>
-      <circle cx="140" cy="140" r="95" fill="none" stroke="url(#g)" stroke-width="2" opacity=".28"/>
-      <circle cx="140" cy="140" r="58" fill="none" stroke="url(#g)" stroke-width="2.5" opacity=".4"/>
-      <g stroke="url(#g)" stroke-width="4" stroke-linecap="round" opacity=".85">
-        <line x1="140" y1="40" x2="140" y2="62"/><line x1="140" y1="218" x2="140" y2="240"/><line x1="40" y1="140" x2="62" y2="140"/><line x1="218" y1="140" x2="240" y2="140"/></g>
-      <circle cx="140" cy="140" r="8" fill="url(#g)" filter="url(#glow)"/><circle cx="140" cy="140" r="3.5" fill="#EAFBFF"/>
-    </svg>
-    <div class="blip" id="b0" style="left:210px;top:92px"></div><div class="lbl" id="l0" style="left:224px;top:84px">TOOL ABUSE</div>
-    <div class="blip" id="b1" style="left:96px;top:70px"></div><div class="lbl" id="l1" style="left:-20px;top:40px">PROMPT INJECTION</div>
-    <div class="blip" id="b2" style="left:70px;top:186px"></div><div class="lbl" id="l2" style="left:-34px;top:196px">SECRET LEAK</div>
-    <div class="blip" id="b3" style="left:196px;top:200px"></div><div class="lbl" id="l3" style="left:150px;top:230px">XSS OUTPUT</div>
-    <div class="blip" id="b4" style="left:150px;top:62px"></div>
-    <div class="blip" id="b5" style="left:118px;top:214px"></div>
-  </div>
-
-  <div id="right">
-    <div class="chip">AI AGENT SECURITY SCANNER</div>
-    <div id="word">probe<span>0</span></div>
+  <div id="lockup">
+    <div class="chip">· AI AGENT SECURITY SCANNER ·</div>
+    <div class="row">
+      <div id="probe">probe</div>
+      <div id="reticle"><svg viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="cy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00E5FF"/><stop offset="1" stop-color="#7FB2FF"/></linearGradient>
+          <filter id="gl" x="-70%" y="-70%" width="240%" height="240%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- the "0": bold white ring -->
+        <circle cx="60" cy="60" r="46" fill="none" stroke="#fff" stroke-width="12" filter="url(#gl)"/>
+        <!-- HUD target-lock corner brackets -->
+        <g id="brackets" stroke="url(#cy)" stroke-width="4.5" stroke-linecap="round" fill="none" filter="url(#gl)">
+          <path d="M20 8 H8 V20"/><path d="M100 8 H112 V20"/><path d="M20 112 H8 V100"/><path d="M100 112 H112 V100"/>
+        </g>
+        <!-- crosshair -->
+        <g stroke="#9FE0FF" stroke-width="3" stroke-linecap="round" opacity=".9"><line x1="60" y1="24" x2="60" y2="34"/><line x1="60" y1="86" x2="60" y2="96"/><line x1="24" y1="60" x2="34" y2="60"/><line x1="86" y1="60" x2="96" y2="60"/></g>
+        <!-- rotating scan arc -->
+        <g id="arc"><path d="M60 24 A36 36 0 0 1 96 60" fill="none" stroke="#00E5FF" stroke-width="4" stroke-linecap="round" filter="url(#gl)" opacity=".95"/></g>
+        <!-- center node + lock flash -->
+        <circle id="lock" cx="60" cy="60" r="12" fill="none" stroke="#FF3B5C" stroke-width="3" opacity="0"/>
+        <circle cx="60" cy="60" r="6" fill="url(#cy)" filter="url(#gl)"/><circle cx="60" cy="60" r="2.6" fill="#fff"/>
+      </svg></div>
+    </div>
     <div class="tag">Find the weaknesses in your AI — <b>before attackers do.</b></div>
-    <div class="status"><span class="dot" id="livedot"></span>SCANNING<span style="color:#3a4166">·</span>THREATS FOUND: <span class="n" id="count">0</span></div>
+    <div class="term"><span class="c">&gt;</span> scanning agent… <span class="c">·</span> threats found: <span class="n" id="cnt">0</span></div>
   </div>
 
   <div id="scan"></div><div id="vig"></div>
 </div>
 <script>
-  // blip angles (deg from center, 0=right, clockwise) matched to their positions
-  var B=[{a:-25},{a:205},{a:150},{a:40},{a:-70},{a:110}];
-  var cx=140,cy=140;
-  ['b0','b1','b2','b3','b4','b5'].forEach(function(id,i){var e=document.getElementById(id);var r=e.getBoundingClientRect();});
+  // code rain (fixed chars per column so it doesn't flicker; just scrolls)
+  var cv=document.getElementById('rain'),cx=cv.getContext('2d');
+  var cols=[],CW=38,HEX='0123456789ABCDEF<>/{}$#*';
+  for(var x=6;x<1200;x+=CW){var s='';for(var k=0;k<22;k++)s+=HEX[(Math.random()*HEX.length)|0];cols.push({x:x,chars:s,sp:0.5+Math.random()*0.8,off:Math.random()*400});}
+  function rain(t){cx.clearRect(0,0,1200,400);cx.font="15px 'JetBrains Mono',monospace";
+    cols.forEach(function(c){for(var i=0;i<c.chars.length;i++){var y=((c.off+t*400*c.sp+i*22)%440)-20;var a=Math.max(0,0.16-i*0.006);cx.fillStyle='rgba(90,200,255,'+a.toFixed(3)+')';cx.fillText(c.chars[i],c.x,y);}});}
+
+  var arcAngle=0;
   window.__setTime=function(t){
-    var sweep=t*360;                         // one full sweep per loop
-    document.getElementById('sweep').style.transform='rotate('+sweep+'deg)';
-    var found=0;
-    B.forEach(function(b,i){
-      var ang=((b.a%360)+360)%360;
-      var diff=((sweep-ang)%360+360)%360;    // how long since sweep passed this blip
-      var passed=diff<300;                   // stays lit after being swept (until near loop end)
-      if(passed) found++;
-      var near=diff<40;                       // bright pulse right as swept
-      var blip=document.getElementById('b'+i);
-      blip.style.opacity=passed?(near?1:0.55):0;
-      blip.style.transform='scale('+(near?1.0+0.5*(1-diff/40):0.8)+')';
-      var lbl=document.getElementById('l'+i);
-      if(lbl) lbl.style.opacity=passed?(near?1:0.7):0;
-    });
-    document.getElementById('count').textContent=found;
-    document.getElementById('livedot').style.opacity=(0.4+0.6*Math.abs(Math.sin(t*Math.PI*6))).toFixed(2);
-    // subtle glitch on the wordmark occasionally
-    var w=document.getElementById('word');
-    var gl=(Math.sin(t*Math.PI*2*5)>0.97);
-    w.style.transform=gl?'translateX('+((Math.random()-0.5)*6)+'px)':'none';
+    rain(t);
+    arcAngle=t*360*2;
+    document.getElementById('arc').setAttribute('transform','rotate('+arcAngle+' 60 60)');
+    document.getElementById('brackets').setAttribute('transform','rotate('+(-t*40)+' 60 60)');
+    // lock flash + counter tick as the scan "finds" threats
+    var phase=(t*9)%1, found=Math.min(9,Math.floor(t*9)+1);
+    document.getElementById('cnt').textContent=found;
+    var lf=Math.max(0,1-phase*4); document.getElementById('lock').setAttribute('opacity',(lf*0.9).toFixed(2));
+    document.getElementById('lock').setAttribute('r',(10+phase*10).toFixed(1));
   };
-  window.__ready=document.fonts.ready.then(function(){return new Promise(function(r){setTimeout(r,200)})});
+  window.__ready=document.fonts.ready.then(function(){return new Promise(function(r){setTimeout(r,250)})});
 </script>
 </body></html>
