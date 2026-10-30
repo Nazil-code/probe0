@@ -55,7 +55,7 @@ cd probe0
 node bin/probe0.mjs scan --target demo
 ```
 
-> 📦 On npm: `npm install -g @nazil21/probe0` — then run `probe0 scan`.
+> 📦 On npm: `npm install -g probe0-cli` — then run `probe0 scan`.
 
 ## 🎬 See it in action
 
