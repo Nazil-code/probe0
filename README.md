@@ -216,7 +216,7 @@ Need more than the CLI? **[Automate with Nazil](https://automatewithnazil.com)**
 - **Remediation & integration** — wiring Probe0 into your CI/CD, custom rules for your stack, and help shipping the fixes.
 - **Secure-by-design builds** — AI automations, chatbots, and web apps built with security baked in from day one.
 
-📧 **[hello@automatewithnazil.com](mailto:hello@automatewithnazil.com)** · 🌐 **[automatewithnazil.com](https://automatewithnazil.com)**
+📧 **[automatewithnazil@gmail.com](mailto:automatewithnazil@gmail.com)** · 🌐 **[automatewithnazil.com](https://automatewithnazil.com)**
 
 ## 📄 License
 
