@@ -15,7 +15,7 @@
 **Open-source security testing for AI agents and applications.**
 Probe0 finds how your AI can be tricked, gives you **reproducible evidence**, tells you **how to fix each issue**, and ships a **CI test** so it can't come back.
 
-[Quickstart](#-quickstart) · [See it in action](#-see-it-in-action) · [What it tests](#-what-probe0-tests) · [Test your own AI](#-test-your-own-ai-gemini) · [How it compares](#-how-probe0-compares) · [Contributing](#-contributing)
+[How it works](#️-how-it-works) · [Quickstart](#-quickstart) · [Commands](#-commands) · [See it in action](#-see-it-in-action) · [What it tests](#-what-probe0-tests) · [Test your own AI](#-test-your-own-ai-gemini) · [How it compares](#-how-probe0-compares) · [Contributing](#-contributing)
 
 </div>
 
