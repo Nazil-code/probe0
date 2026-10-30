@@ -1,5 +1,5 @@
 {
-  "name": "probe0",
+  "name": "@nazil21/probe0",
   "version": "0.1.0",
   "description": "Open-source security testing for AI agents and applications. Find weaknesses, fix them, keep them fixed.",
   "type": "module",
