@@ -43,6 +43,19 @@ Probe0 owns that gap:
 
 Probe0 is **not** the first AI security tool and doesn't claim to be — see the honest [comparison](#-how-probe0-compares).
 
+## ⚙️ How it works
+
+1. **Point it at an AI you own** — the bundled demo agent, your Google Gemini system prompt, or any HTTP chatbot endpoint (set in `probe0.config.json`).
+2. **It runs each attack multiple times** (default 5 trials). AI is probabilistic, so one odd response is never treated as a verdict.
+3. **Each check gets a verdict + confidence** — `FAIL` / `PASS` / `INCONCLUSIVE` with a score (e.g. 4/5 = 80%), plus redacted request/response **evidence** anyone can reproduce.
+4. **Every failing check comes with a concrete fix** — written for developers, not generic advice.
+5. **Fix it, then run `probe0 verify`** — it re-runs only what failed and confirms the fix worked (fail → pass).
+6. **Lock it in CI** — a GitHub Actions step fails the build if a fixed flaw ever comes back.
+
+```
+your AI  →  probe0 scan  →  findings (evidence + confidence + fix)  →  you fix  →  probe0 verify  →  CI keeps it fixed
+```
+
 ## ⚡ Quickstart
 
 Zero dependencies — runs with just **Node.js 18+**.
