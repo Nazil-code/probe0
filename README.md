@@ -70,6 +70,20 @@ node bin/probe0.mjs scan --target demo
 
 > 📦 On npm: `npm install -g probe0-cli` — then run `probe0 scan`.
 
+## 🧰 Commands
+
+| Command | What it does |
+|---|---|
+| `probe0 init` | Create `probe0.config.json` for your target (Gemini or HTTP) |
+| `probe0 scan` | Run the security checks against the configured target |
+| `probe0 verify` | Re-run only the checks that failed last time (after you apply a fix) |
+| `probe0 report` | Export the last scan as a shareable `probe0-report.html` |
+| `probe0 rules` | List all available checks |
+
+**Useful flags for `scan`:** `--target demo` (use the bundled demo agent) · `--trials 5` (runs per check) · `--verbose` (show evidence + fix) · `--ci` (exit non-zero on any FAIL, for pipelines).
+
+> 💡 Installed from npm, the command is `probe0 …`. From a cloned source folder, use `node bin/probe0.mjs …` instead (e.g. `node bin/probe0.mjs scan --target demo`).
+
 ## 🎬 See it in action
 
 <div align="center">
