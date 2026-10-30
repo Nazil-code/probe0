@@ -206,6 +206,18 @@ node --test                     # unit tests
 node scripts/gemini-smoke.mjs   # verify the Gemini adapter path (mocked network)
 ```
 
+## 💼 Commercial use & support
+
+Probe0 is **free and open-source (Apache-2.0)** — use it in personal, academic, or commercial work at no cost, forever.
+
+Need more than the CLI? **[Automate with Nazil](https://automatewithnazil.com)** offers paid, hands-on help:
+
+- **AI security audits** — we run Probe0 (and manual testing) against your production AI agents and hand you a prioritized, fix-first report.
+- **Remediation & integration** — wiring Probe0 into your CI/CD, custom rules for your stack, and help shipping the fixes.
+- **Secure-by-design builds** — AI automations, chatbots, and web apps built with security baked in from day one.
+
+📧 **[hello@automatewithnazil.com](mailto:hello@automatewithnazil.com)** · 🌐 **[automatewithnazil.com](https://automatewithnazil.com)**
+
 ## 📄 License
 
 [Apache-2.0](LICENSE) · Built by [**Automate with Nazil**](https://automatewithnazil.com) — AI automation, web apps, and security.
